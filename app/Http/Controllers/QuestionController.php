@@ -10,6 +10,7 @@ class QuestionController extends Controller
 {
     
      public function addQuestion(Request $request) {
+      if($request->question){
          $quest=$request->question;
       $getQuest=Question::where('Qn',$quest)->first();
       if($getQuest){
@@ -17,7 +18,18 @@ class QuestionController extends Controller
     'warning' => 'this question  '.$quest.'  '.' alredy exist',
 ],403);
       }
+}
 
+          if($request->hasfile('myfile')){
+       $File = $request->file('myfile'); 
+        $sub_path = 'api/files'; 
+        $real_name = $File->getClientOriginalName(); 
+        $destination_path = public_path($sub_path);  
+        $File->move($destination_path,  $real_name);  
+        return response()->json('File Save');
+      }
+
+           
        $question = new Question();
        $question->Qn =  $request->question;
        $question->ImageName   = $request->imageName;
