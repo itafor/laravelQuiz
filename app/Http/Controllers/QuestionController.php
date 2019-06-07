@@ -1,0 +1,144 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use DB;
+use App\Question;
+use App\Test;
+class QuestionController extends Controller
+{
+    
+     public function addQuestion(Request $request) {
+         $quest=$request->question;
+      $getQuest=Question::where('Qn',$quest)->first();
+      if($getQuest){
+        return response()->json([
+    'warning' => 'this question  '.$quest.'  '.' alredy exist',
+],403);
+      }
+
+       $question = new Question();
+       $question->Qn =  $request->question;
+       $question->ImageName   = $request->imageName;
+       $question->Option1   = $request->option1;
+       $question->Option2   = $request->option2;
+       $question->Option3  = $request->option3;
+       $question->Option4  = $request->option4;
+       $question->answer  = $request->answer;
+       $question->testCode  = $request->testCode;
+       $question->save();
+    if ($question) {
+       return  $question;
+    } else {
+        return 'Question could not be created at this time';
+        }
+ 
+    }
+
+public function updateQuestion(Request $request, $id){
+   $update = Question::where('id', $id)
+        ->update([
+            'Qn'=>$request->input('Qn'),
+            'ImageName'=>$request->input('ImageName'),
+            'Option1'=>$request->input('Option1'),
+            'Option2'=>$request->input('Option2'),
+            'Option3'=>$request->input('Option3'),
+            'Option4'=>$request->input('Option4'),
+            'answer'=>$request->input('answer'),
+            'testCode'=>$request->input('testCode'),
+        ]);
+
+      if($update){
+     return $update;
+      }
+ return response()->json([
+    'warning' => 'Error occured while attempting to delete the Selected question',
+],401);       
+        
+}
+
+     public function tests(Request $request){
+      $testCode=$request->testCode;
+      $getCode=Test::where('testCode',$testCode)->first();
+      if($getCode){
+        return response()->json([
+    'warning' => 'this code '.$testCode.' alredy exist',
+],500);
+      }
+
+       $test = new Test();
+       $test->subjectName  = $request->subjectName;
+       $test->numberOfQn  = $request->numberOfQn;
+       $test->duration  = $request->duration;
+       $test->testCode  = $request->testCode;
+       $test->save();
+    if ($test) {
+       return  $test;
+    } else {
+        return 'test could not be created at this time';
+        }
+    }
+
+    public function getTest(){
+      $alltest=Test::all();
+      return $alltest;
+    }
+
+    public function listQuestions($code){
+      $allQuestion=Question::where('testCode',$code)->get();
+      return $allQuestion;
+    }
+
+
+     public function getTestDetail($code){
+      $testDetail=Test::where('testCode',$code)->first();
+      return $testDetail;
+    }
+
+    public function destroyQuestion($id)
+    {
+        //dd($project);
+        $findUrl = Question::find($id);
+        if($findUrl->delete()){
+         return  $findUrl;
+        }
+   return response()->json([
+    'warning' => 'Error occured while trying to delete this question',
+],401);
+    
+    }
+
+     public function destroyTest($id)
+    {
+        //dd($project);
+        $findUrl = Test::find($id);
+        if($findUrl->delete()){
+         return  $findUrl;
+        }
+   return response()->json([
+    'warning' => 'Error occured while trying to delete this test',
+],401);
+    
+    }
+
+     public function updateTest(Request $request,$id){
+       $update = Test::where('id', $id)
+        ->update([
+            'subjectName'=>$request->input('subjectName'),
+            'numberOfQn'=>$request->input('numberOfQn'),
+            'duration'=>$request->input('duration'),
+            'testCode'=>$request->input('testCode'),
+        ]);
+
+      if($update){
+          return response()->json([
+    'success' => 'Selected test updated successfully',
+],201);
+      } 
+       return response()->json([
+    'success' => 'Selected test updated successfully',
+],403);           
+        }
+     
+}
