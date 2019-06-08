@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use DB;
 use App\Question;
 use App\Test;
@@ -20,15 +21,15 @@ class QuestionController extends Controller
       }
 }
 
-          if($request->hasfile('myfile')){
-       $File = $request->file('myfile'); 
+ if($request->hasfile('myfile')){
+    $File = $request->file('myfile'); 
         $sub_path = 'api/files'; 
         $real_name = $File->getClientOriginalName(); 
         $destination_path = public_path($sub_path);  
         $File->move($destination_path,  $real_name);  
         return response()->json('File Save');
       }
-
+      
            
        $question = new Question();
        $question->Qn =  $request->question;
@@ -49,6 +50,18 @@ class QuestionController extends Controller
     }
 
 public function updateQuestion(Request $request, $id){
+
+       if($request->hasfile('myfile')){
+    $File = $request->file('myfile'); 
+        $sub_path = 'api/files'; 
+        $real_name = $File->getClientOriginalName(); 
+        $destination_path = public_path($sub_path);  
+        $File->move($destination_path,  $real_name);  
+        return response()->json('File Save');
+      }
+      
+
+
    $update = Question::where('id', $id)
         ->update([
             'Qn'=>$request->input('Qn'),
@@ -69,6 +82,18 @@ public function updateQuestion(Request $request, $id){
 ],401);       
         
 }
+
+// public function upLoadFile(){
+//   $request =Input::all();
+//   // if($request->hasfile('myfile')){
+//   //   $File = $request->file('myfile'); 
+//   //       $sub_path = 'api/files'; 
+//   //       $real_name = $File->getClientOriginalName(); 
+//   //       $destination_path = public_path($sub_path);  
+//   //       $File->move($destination_path,  $real_name);  
+//   //       return response()->json('File Save');
+//   //     }
+// }
 
      public function tests(Request $request){
       $testCode=$request->testCode;
