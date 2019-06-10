@@ -22,6 +22,7 @@ class Questions extends Migration
            $table->string('Option3');
            $table->string('Option4');
            $table->string('answer');
+           $table->string('marks');
            $table->string('testCode');
            $table->rememberToken();
            $table->timestamps();

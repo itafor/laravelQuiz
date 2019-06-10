@@ -39,6 +39,7 @@ class QuestionController extends Controller
        $question->Option3  = $request->option3;
        $question->Option4  = $request->option4;
        $question->answer  = $request->answer;
+       $question->marks  = $request->marks;
        $question->testCode  = $request->testCode;
        $question->save();
     if ($question) {
