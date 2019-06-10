@@ -13,6 +13,7 @@ class QuizController extends Controller
 
    	return $quiz;
    }
+   
 
    public function getAnswer($qtId){
    		$answer=DB::table('questions')

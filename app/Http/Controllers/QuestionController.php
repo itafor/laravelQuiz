@@ -83,6 +83,19 @@ public function updateQuestion(Request $request, $id){
         
 }
 
+
+ public function orderQuestionByCode(){
+         $questions=DB::table('questions')
+          ->select('testCode', DB::raw('count(*) as total'))
+         ->groupBy('testCode')
+         ->get();
+         if($questions){
+         return $questions;
+         }
+         return response()->json([
+    'warning' => 'Error occured while attempting to get questions',
+],401);  
+   }
 // public function upLoadFile(){
 //   $request =Input::all();
 //   // if($request->hasfile('myfile')){

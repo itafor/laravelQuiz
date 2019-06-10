@@ -22,8 +22,9 @@ Route::post('/insertParticipants','ParticipantController@insertParticipant');
 Route::Put('/updateParticipant/{id}','ParticipantController@updateParticipant');
 Route::get('/get-questions','QuizController@getQuestions');
 Route::get('/get-answer/{qtId}','QuizController@getAnswer');
-
 Route::post('/newTest','QuestionController@tests');
+
+Route::get('/get-groupedQuestions','QuestionController@orderQuestionByCode');
 Route::get('/get-test','QuestionController@getTest');
 Route::get('/display-questions/{code}','QuestionController@listQuestions');
 Route::delete('/delete-question/{id}','QuestionController@destroyQuestion');
