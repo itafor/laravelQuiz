@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Participant;
+use App\Result;
+
 class ParticipantController extends Controller
 {
     public function insertParticipant(Request $request) {
@@ -12,9 +14,7 @@ class ParticipantController extends Controller
        $participant = new Participant();
        $participant->name        = $request->name;
        $participant->email       = $request->email;
-       $participant->score       = $request->score;
-       $participant->TimeSpent   = $request->TimeSpent;
-       $participant->testCode    = $request->testCode;
+       $participant->role       = $request->role;
        $participant->save();
     if ($participant) {
        return  $participant;
@@ -44,6 +44,22 @@ class ParticipantController extends Controller
       }            
         }
       
+
+       public function submitResult(Request $request) {
+       
+       $result = new Result();
+       $result->email       = $request->email;
+       $result->code       = $request->code;
+       $result->score       = $request->score;
+       $result->maxScore       = $request->maxScore;
+       $result->save();
+    if ($result) {
+       return  $result;
+    } else {
+        return 'result could not be created at this time';
+        }
+ 
+    }
 
     }
 

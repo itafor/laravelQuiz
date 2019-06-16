@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Participants extends Migration
+class Results extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class Participants extends Migration
      */
     public function up()
     {
-        Schema::create('participants', function (Blueprint $table) {
+         Schema::create('results', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
-            $table->string('email')->unique();
-            $table->integer('score')->nullable();
-            $table->string('TimeSpent')->nullable();
-            $table->string('testCode')->nullable();
+            $table->string('email');
+            $table->string('code');
+            $table->integer('score');
+            $table->integer('maxScore');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -32,8 +31,6 @@ class Participants extends Migration
      */
     public function down()
     {
-         Schema::dropIfExists('participants');
+        Schema::dropIfExists('results');
     }
-
-    
 }

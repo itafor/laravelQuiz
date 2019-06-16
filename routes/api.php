@@ -20,13 +20,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/addNewQuestion','QuestionController@addQuestion');
 Route::post('/insertParticipants','ParticipantController@insertParticipant');
 Route::Put('/updateParticipant/{id}','ParticipantController@updateParticipant');
+Route::post('/submit-Result','ParticipantController@submitResult');
+
 Route::get('/get-questions','QuizController@getQuestions');
 Route::get('/get-answer/{qtId}','QuizController@getAnswer');
 Route::post('/newTest','QuestionController@tests');
 
 Route::get('/get-groupedQuestions','QuestionController@orderQuestionByCode');
 Route::get('/get-test','QuestionController@getTest');
-Route::get('/display-questions/{code}','QuestionController@listQuestions');
+Route::get('/display-questions/{code}/{email}','QuestionController@listQuestions');
+Route::get('/show-questions/{code}','QuestionController@showQuestions');
+
 Route::delete('/delete-question/{id}','QuestionController@destroyQuestion');
 Route::delete('/delete-test/{id}','QuestionController@destroyTest');
 Route::PUT('/update-question/{id}','QuestionController@updateQuestion');

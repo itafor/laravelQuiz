@@ -24,4 +24,6 @@ class QuizController extends Controller
    		return $answer;
    		}
    }
+
+   
 }

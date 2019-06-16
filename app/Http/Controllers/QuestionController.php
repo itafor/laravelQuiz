@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 use DB;
 use App\Question;
 use App\Test;
+use App\Result;
 class QuestionController extends Controller
 {
     
@@ -136,11 +137,31 @@ public function updateQuestion(Request $request, $id){
       return $alltest;
     }
 
-    public function listQuestions($code){
-      $allQuestion=Question::where('testCode',$code)->get();
-      return $allQuestion;
-    }
+    public function listQuestions($code, $email){
+     // $userEmail=$request->email;
+        $getQt=Question::where('testCode',$code)->first();
+      $checkUser=Result::where('code',$code)
+     ->where('email',$email) ->first();
+     if($checkUser){
+      return response()->json([
+    'warning' => 'You have alredy taken this test',
+],401);
+     }else if(!$getQt){
+      return response()->json([
+    'warning' => 'The test code you entered does not exist',
+],401);
+}else{
 
+   $allQuestion=Question::where('testCode',$code)->get();
+      return $allQuestion;
+     
+}
+}
+
+ public function showQuestions($code){
+$allQuestion=Question::where('testCode',$code)->get();
+      return $allQuestion;
+}
 
      public function getTestDetail($code){
       $testDetail=Test::where('testCode',$code)->first();

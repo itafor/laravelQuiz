@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Participant extends Model
 {
    protected $fillable = [
-        'name', 'email', 'score','TimeSpent','testCode',
+        'name', 'email', 'role'
     ];
 }
