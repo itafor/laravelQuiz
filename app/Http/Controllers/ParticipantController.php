@@ -52,6 +52,7 @@ class ParticipantController extends Controller
        $result->code       = $request->code;
        $result->score       = $request->score;
        $result->maxScore       = $request->maxScore;
+       $result->participant_id       = $request->participant_id;
        $result->save();
     if ($result) {
        return  $result;
@@ -59,6 +60,17 @@ class ParticipantController extends Controller
         return 'result could not be created at this time';
         }
  
+    }
+
+    public function getResult($code){
+      $result=Result::join('participants','participants.id','=','results.participant_id')
+      ->selectRaw('participants.name, results.email, results.code, results.score,results.maxScore,results.created_at')
+      ->where('results.code',$code)
+      ->orderBy('results.score','desc')->get();
+      if($result){
+        return $result;
+      }
+      return 'result could not be display at this time';
     }
 
     }

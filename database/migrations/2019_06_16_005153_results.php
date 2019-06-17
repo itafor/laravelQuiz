@@ -19,6 +19,8 @@ class Results extends Migration
             $table->string('code');
             $table->integer('score');
             $table->integer('maxScore');
+            $table->unsignedBigInteger('participant_id');
+            $table->foreign('participant_id')->references('id')->on('participants');
             $table->rememberToken();
             $table->timestamps();
         });
