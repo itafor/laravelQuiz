@@ -22,6 +22,7 @@ Route::post('/insertParticipants','ParticipantController@insertParticipant');
 Route::Put('/updateParticipant/{id}','ParticipantController@updateParticipant');
 Route::post('/submit-Result','ParticipantController@submitResult');
 Route::get('/display-result/{code}','ParticipantController@getResult');
+Route::get('/log-in/{email}/{password}','ParticipantController@login');
 
 
 Route::get('/get-questions','QuizController@getQuestions');

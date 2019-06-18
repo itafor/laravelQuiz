@@ -10,16 +10,23 @@ use App\Result;
 class ParticipantController extends Controller
 {
     public function insertParticipant(Request $request) {
-       
+       $checkEmail =Participant::where('email',$request->email)->first();
+       if($checkEmail){
+        return response()->json(
+          ['warning'=>'You have already created an account, please login!!!'],401);
+        }
+
        $participant = new Participant();
        $participant->name        = $request->name;
        $participant->email       = $request->email;
-       $participant->role       = $request->role;
+       $participant->role        = $request->role;
+       $participant->password    = $request->password;
        $participant->save();
     if ($participant) {
        return  $participant;
     } else {
-        return 'participant could not be created at this time';
+        return response()->json(
+          ['warning'=>'participant could not be created at this time'],401);
         }
  
     }
@@ -73,6 +80,18 @@ class ParticipantController extends Controller
       return 'result could not be display at this time';
     }
 
+
+public function login($email, $password){
+  $signin =Participant::where('email',$email)
+      ->where('password',$password)
+      ->first();
+      if($signin){
+        return $signin;
+      }
+
+      return response()->json([
+        'warning'=>'We cannot find the provided credentials in our record!!'],400);
+}
     }
 
 

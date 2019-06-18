@@ -18,6 +18,7 @@ class Participants extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->string('role')->nullable();
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
