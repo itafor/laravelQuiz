@@ -53,19 +53,26 @@ class ParticipantController extends Controller
       
 
        public function submitResult(Request $request) {
-       
+       $email =  $request->email;
+       $checkUser = Result::where('email',$email)->first();
+       if($checkUser){
+        return response()->json([
+          'warning'=>'Results already submitted!!'],401);
+       }
        $result = new Result();
        $result->email       = $request->email;
        $result->code       = $request->code;
        $result->score       = $request->score;
        $result->maxScore       = $request->maxScore;
-       $result->participant_id       = $request->participant_id;
+       $result->participant_id  = $request->participant_id;
        $result->save();
     if ($result) {
        return  $result;
     } else {
-        return 'result could not be created at this time';
-        }
+             return response()->json([
+        'warning'=>'result could not be created at this time'],403);
+}
+        
  
     }
 
