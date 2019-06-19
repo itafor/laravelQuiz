@@ -54,7 +54,10 @@ class ParticipantController extends Controller
 
        public function submitResult(Request $request) {
        $email =  $request->email;
-       $checkUser = Result::where('email',$email)->first();
+       $code =  $request->code;
+       $checkUser = Result::where('email',$email)
+        ->where('code',$code)->first();
+      
        if($checkUser){
         return response()->json([
           'warning'=>'Results already submitted!!'],401);
