@@ -91,9 +91,22 @@ class ParticipantController extends Controller
     }
 
 
-public function login($email, $password){
+public function candidateLogin($email, $password){
   $signin =Participant::where('email',$email)
       ->where('password',$password)
+      ->first();
+      if($signin){
+        return $signin;
+      }
+
+      return response()->json([
+        'warning'=>'We cannot find the provided credentials in our record!!'],400);
+}
+
+public function examinalLogin($email, $password,$examinal){
+  $signin =Participant::where('email',$email)
+      ->where('password',$password)
+      ->where('role',$examinal)
       ->first();
       if($signin){
         return $signin;

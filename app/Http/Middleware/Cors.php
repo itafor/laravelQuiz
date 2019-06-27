@@ -12,6 +12,8 @@ class Cors
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
+     http://localhost:4200
+     https://quiz-e3a9c.firebaseapp.com
      */
     public function handle($request, Closure $next)
     {

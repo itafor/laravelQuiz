@@ -8,6 +8,7 @@ use DB;
 use App\Question;
 use App\Test;
 use App\Result;
+use App\Contact;
 class QuestionController extends Controller
 {
     
@@ -98,17 +99,20 @@ public function updateQuestion(Request $request, $id){
     'warning' => 'Error occured while attempting to get questions',
 ],401);  
    }
-// public function upLoadFile(){
-//   $request =Input::all();
-//   // if($request->hasfile('myfile')){
-//   //   $File = $request->file('myfile'); 
-//   //       $sub_path = 'api/files'; 
-//   //       $real_name = $File->getClientOriginalName(); 
-//   //       $destination_path = public_path($sub_path);  
-//   //       $File->move($destination_path,  $real_name);  
-//   //       return response()->json('File Save');
-//   //     }
-// }
+
+public function contactus(Request $request){
+   $contact = new Contact();
+   $contact->email = $request->email;
+   $contact->message = $request->message;
+   $contact->save();
+       if($contact) {
+      return response()->json([
+         'success'=>'Thanks for contacting us, we will get back to you shortly'],200);
+    } else {
+        return response()->json([
+         'error'=>'Ooops!!, You message could not be sent at this time,please try again'],401);
+        }
+}
 
      public function tests(Request $request){
       $testCode=$request->testCode;
@@ -124,6 +128,7 @@ public function updateQuestion(Request $request, $id){
        $test->numberOfQn  = $request->numberOfQn;
        $test->duration  = $request->duration;
        $test->testCode  = $request->testCode;
+       $test->instruction  = $request->instruction;
        $test->save();
     if ($test) {
        return  $test;
@@ -201,6 +206,8 @@ $allQuestion=Question::where('testCode',$code)->get();
             'numberOfQn'=>$request->input('numberOfQn'),
             'duration'=>$request->input('duration'),
             'testCode'=>$request->input('testCode'),
+            'instruction'=>$request->input('instruction'),
+
         ]);
 
       if($update){

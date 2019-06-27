@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Question;
 use DB;
+
 class QuizController extends Controller
 {
    public function getQuestions(){
@@ -24,6 +25,7 @@ class QuizController extends Controller
    		return $answer;
    		}
    }
+
 
    
 }
