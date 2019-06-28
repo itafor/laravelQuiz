@@ -129,6 +129,7 @@ public function contactus(Request $request){
        $test->duration  = $request->duration;
        $test->testCode  = $request->testCode;
        $test->instruction  = $request->instruction;
+       $test->participantId  = $request->participantId;
        $test->save();
     if ($test) {
        return  $test;
@@ -137,8 +138,8 @@ public function contactus(Request $request){
         }
     }
 
-    public function getTest(){
-      $alltest=Test::all();
+    public function getTest($id){
+      $alltest=Test::where('participantId',$id)->get();
       return $alltest;
     }
 

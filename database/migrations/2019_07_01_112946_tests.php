@@ -20,6 +20,9 @@ class Tests extends Migration
             $table->integer('duration');
             $table->string('testCode');
             $table->mediumtext('instruction');
+            $table->unsignedBigInteger('participantId');
+            $table->foreign('participantId')->references('id')->on('participants');
+            
             $table->timestamps();
         });
     }

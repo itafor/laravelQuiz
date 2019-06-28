@@ -32,7 +32,7 @@ Route::get('/get-answer/{qtId}','QuizController@getAnswer');
 Route::post('/newTest','QuestionController@tests');
 
 Route::get('/get-groupedQuestions','QuestionController@orderQuestionByCode');
-Route::get('/get-test','QuestionController@getTest');
+Route::get('/get-test/{id}','QuestionController@getTest');
 Route::get('/display-questions/{code}/{email}','QuestionController@listQuestions');
 Route::get('/show-questions/{code}','QuestionController@showQuestions');
 
