@@ -12,16 +12,17 @@ class Cors
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
+     php artisan serve --host=some-domain.test --port=anyPort
      http://localhost:4200
      https://quiz-e3a9c.firebaseapp.com
      */
     public function handle($request, Closure $next)
     {
         return $next($request)
-            ->header('Access-Control-Allow-Origin', 'http://localhost:4200')
-            ->header('Access-Control-Allow-Methods', 'POST,GET, DELETE, PUT, OPTIONS')
+            ->header('Access-Control-Allow-Origin', '*')
+            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT')
             ->header('Access-Control-Allow-Credentials', 'true')
             ->header('Access-Control-Max-Age', '10000')
-            ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Content-Encoding: none');
     }
 }
